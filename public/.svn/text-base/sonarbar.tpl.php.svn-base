@@ -1,0 +1,15 @@
+<div id="sonarbar_container">
+	<h1 id="sonarbar_logo">Sonar</h1>
+	<div id="sonarbar_right">
+	    <form action="" method="get">
+		<input name="sonarbar_start" value="<?php print self::getStartDate(); ?>" id="sonarbar_start">
+		<input name="sonarbar_end" value="<?php print self::getEndDate(); ?>" id="sonarbar_end">
+		<select name="sonarbar_interval">
+		    <option value="daily" <?php print ('daily' == self::getInterval()) ? 'selected = "selected"' : '' ?>>Daily</option>
+		    <option value="weekly" <?php print ('weekly' == self::getInterval()) ? 'selected = "selected"' : '' ?>>Weekly</option>
+		    <option value="monthly" <?php print ('monthly' == self::getInterval()) ? 'selected = "selected"' : '' ?>>Monthly</option>
+		</select>
+		<input type="Submit" value="Submit" id="Submit">
+		</form>
+	</div>
+</div>
