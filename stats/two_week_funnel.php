@@ -1,4 +1,6 @@
 <?
+
+
 $daysAgo = 1; //run from yesterday
 
 //Limit everything here to users that have signed up in the past two weeks.

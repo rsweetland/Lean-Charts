@@ -1,17 +1,17 @@
 <?
 
-/* 
+/**  
 * Counts the total number users (of a given cohort) who who have hit an event.
 * 
 *  @param event (which event are we looking for)
-*  @cohort sql query returning the our target users
-*  @instances the minimum number of events for the user to be counted (for example
+*  @param cohort sql query returning the our target users
+*  @param instances the minimum number of events for the user to be counted (for example
 *  you may want to pull how many users have uploaded a photo at least 5 times.
 * 
-* Ex: $userCohort = "SELECT uid FROM log WHERE date BETWEEN '2011-05-01' AND '2011-06-11' AND event = 'first time fut use: user record created'";
+*   @example $userCohort = "SELECT uid FROM log WHERE date BETWEEN '2011-05-01' AND '2011-06-11' AND event = 'first time fut use: user record created'";
 * countUsersWithEvent('first time fut use: user record created', $userCohort)
 *  
-* IMPORTANT: NEVER EXPOSE 'cohort' TO END-USER AS IT EXECUTES SQL DIRECTLY WITHOUT ESCAPING
+*   IMPORTANT: NEVER EXPOSE 'cohort' TO END-USER AS IT EXECUTES SQL DIRECTLY WITHOUT ESCAPING
 */
 
 function countUsersWithEvent($event, $minInstances = '', $cohort) {
@@ -63,6 +63,7 @@ function countUsersWithEvent($event, $minInstances = '', $cohort) {
      * print SonarStatManager::countCohortEvents('sent: welcome email', '2011-05-01', '2011-06-11', $userSegment); 
      *
      * IMPORTANT: NEVER EXPOSE 'userCohortSql' TO END-USER AS IT EXECUTES SQL DIRECTLY WITHOUT ESCAPING
+     * @todo I think this class is broken...
      * 
      */
 

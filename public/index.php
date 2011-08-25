@@ -1,5 +1,11 @@
-<? include '../init.php'; ?>
-<!DOCTYPE html>
+<?php 
+
+    //Not finished...work in progress.
+    
+    include('../init.php'); 
+
+?><!DOCTYPE html>
+
 <html>
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -17,6 +23,8 @@
 <body>
 
 <?php
+
+    //examples of how to render graphs
 
     $days = (int) (array_key_exists('days', $_GET)) ? $_GET['days'] : 60;
     $interval = 'daily';

@@ -1,5 +1,7 @@
 <?php
 
+// Stat is run only on the daily cron script.
+
 $connection = SonarStatManager::dbConnect();
 
 //helper function to calculate upgrade percentage

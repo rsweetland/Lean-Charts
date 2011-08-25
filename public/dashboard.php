@@ -1,4 +1,15 @@
-<?php print admin_menu(); ?>
+<?
+
+/*
+
+File provided for reference only. This needs to be ported out of the old admin 
+dashboard into its own dashboard.
+
+*/
+
+?>
+
+
 <script type='text/javascript' src='https://www.google.com/jsapi'></script>
 <script>
 google.load('visualization', '1', {'packages':['annotatedtimeline']});
