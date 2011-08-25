@@ -1,5 +1,6 @@
 <?
 
+//Stats that calculate the two week funnel
 
 $daysAgo = 1; //run from yesterday
 
