@@ -8,7 +8,7 @@
 /**
  * Provides a unified API for SimpleLog sub classes
  * 
- * @example SimpleLog:trigger('sale');
+ * @example SimpleLog::trigger('sale');
  * @example $this->simplelog->trigger('sale') // also available in codeigniter
  */
 Class SimpleLog
