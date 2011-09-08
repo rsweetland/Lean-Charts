@@ -63,12 +63,17 @@ class SonarStatManager
      * Grabs all unique log values, populates sonar_stats so each can be tracked
      *
      * @return string
+     * TO-DO: Custom stats only populate the sonar_stat_val_hr and sonar_stat_val_day
+     * tables, no the log tables. This method should therefore also check these
+     * tables for other unique stat entries and add them to the stat list.
+     * 
      */
     public static function populateStatList()
     {
 		self::dbConnect();	
 		$sql = "INSERT INTO sonar_stats (event)
-				SELECT DISTINCT event from log WHERE log.event NOT IN 
+				SELECT DISTINCT event FROM log 
+				    WHERE log.event NOT IN 
 				(
 					SELECT sonar_stats.event from sonar_stats
 				);";
@@ -84,13 +89,16 @@ class SonarStatManager
 
 
     /**
-     * Processes log files, populating 'hourly' table with summary results from last hour (by default). 
+     * Processes log files, populating 'hourly' table with summary results from last hour (by default).
 	 * Populating "hoursAgo" processes stats from that particular hour, Ex: 36 means one hour, 36 hours ago
      *
      * @param string event 
      * @param string hoursAgo 
 	 * @return bool
      *
+     * TO-DO: before adding the stat value, check to see if the value has 
+     * already been entered. This will prevent double-entries.
+     * 
      */
     public static function populateHourlyStat($event, $hoursAgo = 1)
 	{
@@ -142,17 +150,20 @@ class SonarStatManager
 
     /**
      * Processes log files, populating 'daily' table with summary results from yesterday (by default). 
-	 * Populating "daysAgo" processes stats from that particular day, Ex: 3 means one day, 3 days ago
+	 * Populating "daysAgo" processes stats from that particular day, Ex: "3" will populate a single
+	 * day's worth of stats from the day that ways 3 days ago.
      *
      * @param string event 
      * @param string daysAgo  
 	 * @return bool
      *
+     * TO-DO: before adding the stat value, check to see if the value has 
+     * already been entered. This will prevent double-entries.
      */
     public static function populateDailyStat($event, $daysAgo = 1) 
 	{
 		self::dbConnect();
-		
+
 		$rangeStart = (int) $daysAgo+1; 
 		$rangeEnd = (int) $daysAgo-1; 
 		$event = mysql_real_escape_string($event);
@@ -174,7 +185,6 @@ EOF;
 				
 		return true; 
 	}
-
 
 
     /**
@@ -203,6 +213,28 @@ EOF;
         return true;
     }
 
+
+    /**
+     * Return the date and how many days/hours/etc ago the last entry was. 
+     * Useful for calculating historical dates.
+	 * 
+     * @param event event
+     * @param from string earliest date we want
+     * @param interval hourly | daily 
+	 * @return array('periodsAgo' => days/hoursAgo, 'timestamp' => mysqlTimeStamp);
+	 * "days / hours ago can be passed as a parameter to setDailyValue, etc. mysqlTimeStamp
+	 * can be used in the query"
+     * TO-DO: needs to be written
+     */
+
+    public static function nextEntryDate($event, $from = 'now', $interval = 'hourly') {
+        // Query the hourly or daily stat value table to find the last entry after $from
+        // ex: SELECT date from sonar_stat_val_hr WHERE date > $from ORDER BY date DESC LIMIT 1;
+        // if hourly, +1 hr, if daily, +1 day, etc.
+        // return an array of how many days / hours ago, and the timestamp of that period end.
+    }
+
+    
 
     /**
      * Adds an external event to external event table to log actions that

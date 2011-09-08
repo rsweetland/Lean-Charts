@@ -147,64 +147,64 @@ class SonarStat
      * @return array
      */
          
-    static function dateRange($startDate, $endDate, $interval) 
-    {
-    
-        $startDate = strtotime($startDate);
-        $endDate = strtotime($endDate);
-        
-        $date = $startDate;
-        
-        while ($date <= $endDate) {
-            switch ($interval) {
-                case 'daily':
-                    $dates[] = date("Y-m-d", $date);
-                    $date += 86400;
-                    break;
-                
-                case 'weekly':
-                    $dates[] = date("Y-m-d", $date);
-                    $shift = "next Sunday";
-                    $date = strtotime($shift, $date);
-	    		    break;
-	    		
-	    		case 'monthly':
-	    	        $dates[] = date("Y-m-t", $date);
-	    		    $shift = "next month";
-	    	        $date = strtotime($shift, $date);
-	    	        break;
-                
-                case 'yearly':
-                    $dates[] = date("Y", $date);
-                    $shift = "next year";
-                    $date = strtotime($shift, $date);
-                    break;
-                default:
-                    break;
-            }        
-        }   
-        
-        return $dates;
-    }
-       
-    /**
-     * Returns graphable array of data accounting for zero-value entries
-     * NOTE: Data must be formatted like 'Y-m-d'=> (value)
-     * @param data array raw data values
-     * @param dateRange array of the whole date range
-     * @return array of the two merged in graphable format
-     */         
-    static function getGraphableData($format = 'highcharts')
-    {
-        $data = $this->getStatValues();
-        $dateRange = $this->dateRange();
-
-        foreach ($dateRange as $date) {
-            $mergedStat[$date] = $data[$date] ? $data[$date] : 0;
-        }
-        
-        return $mergedStat;
-    }
+    // static function dateRange($startDate, $endDate, $interval) 
+    //  {
+    //  
+    //      $startDate = strtotime($startDate);
+    //      $endDate = strtotime($endDate);
+    //      
+    //      $date = $startDate;
+    //      
+    //      while ($date <= $endDate) {
+    //          switch ($interval) {
+    //              case 'daily':
+    //                  $dates[] = date("Y-m-d", $date);
+    //                  $date += 86400;
+    //                  break;
+    //              
+    //              case 'weekly':
+    //                  $dates[] = date("Y-m-d", $date);
+    //                  $shift = "next Sunday";
+    //                  $date = strtotime($shift, $date);
+    //                  break;
+    //              
+    //              case 'monthly':
+    //                  $dates[] = date("Y-m-t", $date);
+    //                  $shift = "next month";
+    //                  $date = strtotime($shift, $date);
+    //                  break;
+    //              
+    //              case 'yearly':
+    //                  $dates[] = date("Y", $date);
+    //                  $shift = "next year";
+    //                  $date = strtotime($shift, $date);
+    //                  break;
+    //              default:
+    //                  break;
+    //          }        
+    //      }   
+    //      
+    //      return $dates;
+    //  }
+    //     
+    //  /**
+    //   * Returns graphable array of data accounting for zero-value entries
+    //   * NOTE: Data must be formatted like 'Y-m-d'=> (value)
+    //   * @param data array raw data values
+    //   * @param dateRange array of the whole date range
+    //   * @return array of the two merged in graphable format
+    //   */         
+    //  static function getGraphableData($format = 'highcharts')
+    //  {
+    //      $data = $this->getStatValues();
+    //      $dateRange = $this->dateRange();
+    // 
+    //      foreach ($dateRange as $date) {
+    //          $mergedStat[$date] = $data[$date] ? $data[$date] : 0;
+    //      }
+    //      
+    //      return $mergedStat;
+    //  }
     
 
 
