@@ -724,8 +724,11 @@ class Sparrow {
                         $error = $this->db->error;
                     }
                     else {
-                        $this->num_rows = $result->num_rows;
-                        $this->affected_rows = $this->db->affected_rows - $result->num_rows;
+                        $this->affected_rows = $this->db->affected_rows;
+                        if ($result instanceof MySQLi_Result) {
+                            $this->num_rows = $result->num_rows;
+                            $this->affected_rows = $this->db->affected_rows - $result->num_rows;
+                        }
                         $this->insert_id = $this->db->insert_id;
                     }
 
