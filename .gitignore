@@ -1,2 +1,3 @@
+.idea
+config/*.ini
 tests/sonar_full_fut_test_data.sql
-config/config.php
