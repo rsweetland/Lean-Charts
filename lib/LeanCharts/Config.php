@@ -4,10 +4,10 @@ class LeanCharts_Config
 {
     private $configuration;
 
-    public function __construct($config)
+    public function __construct($configFile)
     {
-        if (file_exists($config)) {
-            $this->load($config);
+        if (file_exists($configFile)) {
+            $this->load($configFile);
         }
     }
 

@@ -6,7 +6,7 @@ class LeanCharts_ConfigTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->config = new LeanCharts_Config(TEST_DIR . '/config.ini');
+        $this->config = new LeanCharts_Config(TEST_DIR . '/config/app.ini');
     }
 
     public function testConfigurationLoadWorks()

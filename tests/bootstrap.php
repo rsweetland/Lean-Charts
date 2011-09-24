@@ -10,15 +10,6 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 require_once(realpath(__DIR__ . '/../lib/vendors/gwc.autoloader.php'));
+require_once(__DIR__ . '/test_helpers.php');
 
-/*$config = parse_ini_file(__DIR__ . '/config.ini');
-$dsn = "mysqli://" . $config['db.user'] . ":" . $config['db.pass'] . "@" . $config['db.host'] . ":" . $config['db.port'] . "/" . $config['db.name'];
-
-$sql = file_get_contents(__DIR__ . '/../schema/data.sql');
-$statements = explode(";", $sql);
-
-$sparrow = new Sparrow($dsn);
-
-foreach ($statements as $statement) {
-    $sparrow->sql($statement)->execute();
-}*/
+setupTestDatabase();

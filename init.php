@@ -1,8 +1,15 @@
-<?
-define('APP_ROOT', dirname(realpath(__FILE__)) . '/');
-require_once(APP_ROOT . 'config/config.php');
-require_once('SimpleLog_Receiver.class.php');
-require_once('SimpleLog_Receiver.class.php');
-require_once('SonarStat.class.php');
-require_once('SonarStatManager.class.php');
-require_once('helpers.php');
+<?php
+
+// Include the necessary paths
+set_include_path(implode(PATH_SEPARATOR, array(
+    realpath(__DIR__ . '/lib'),
+    realpath(__DIR__ . '/lib/vendors/sparrow'),
+    realpath(__DIR__ . '/stats'),
+    get_include_path(),
+)));
+
+// Initialize the autoloader
+require_once(realpath(__DIR__ . '/lib/vendors/gwc.autoloader.php'));
+
+// Initialize LeanCharts
+LeanCharts::init(__DIR__ . '/config/app.ini');

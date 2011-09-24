@@ -4,12 +4,12 @@ class LeanChartsTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        LeanCharts::init(TEST_DIR . '/config.ini');
+        LeanCharts::init(TEST_DIR . '/config/app.ini');
     }
 
     public function testEventsLoggingWithMinimalInformation()
     {
-        $logId = LeanCharts::logEvent("fut scheduled");
-        $this->assertEquals(3, $logId);
+        $logId = LeanCharts::logEvent("sent: fut to sender");
+        $this->assertEquals(1, $logId);
     }
 }

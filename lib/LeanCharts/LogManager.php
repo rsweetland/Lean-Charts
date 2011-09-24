@@ -4,11 +4,11 @@ class LeanCharts_LogManager extends LeanCharts_AbstractManager
 {
     public function create($log)
     {
-        $eventManager = new LeanCharts_EventManager($this->db);
-        $event = $eventManager->getByName($log['event']);
+        $statManager = new LeanCharts_StatManager($this->db);
+        $stat = $statManager->getByName($log['event']);
 
         $logEntry = array(
-            'event_id'      => $event['event_id'],
+            'stat_id'       => $stat['stat_id'],
             'user_id'       => $log['userId'],
             'object_id'     => $log['objectId'],
             'object_type'   => $log['objectType'],

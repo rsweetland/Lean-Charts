@@ -2,12 +2,19 @@
 
 class LeanCharts
 {
+    /**
+     * @var Sparrow
+     */
     private static $db;
+
+    /**
+     * @var LeanCharts_Config
+     */
     private static $config;
 
-    public static function init($config)
+    public static function init($configFile)
     {
-        self::$config = new LeanCharts_Config($config);
+        self::$config = new LeanCharts_Config($configFile);
         self::$db = new Sparrow(self::getDsn());
     }
 
@@ -28,6 +35,11 @@ class LeanCharts
         return $logId;
     }
 
+    public static function getDb()
+    {
+        return self::$db;
+    }
+
     private static function getDsn()
     {
         return "mysqli://" . self::$config->get('db.user')
@@ -36,5 +48,4 @@ class LeanCharts
                . ":" . self::$config->get('db.port')
                . "/" . self::$config->get('db.name');
     }
-
 }
