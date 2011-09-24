@@ -2,7 +2,12 @@
     Lean Charts / Sonar
 ------------------------------
 
-...yes, there are two names. It was first called Sonar (and referenced 
+Lean Charts is a light weight, open source event-based analytics framework
+allowing developers to create highly customized metrics that analyze the 
+relative success of web applications. Monitor the effects of your changes
+on key metrics. Segment metrics by cohort.
+
+...and yes, there are two names. It was first called Sonar (and referenced 
 throughout the code as Sonar) Warning: the name could change again : ) 
 
 ------------------------------

@@ -25,14 +25,14 @@ function countUsersWithEvent($event, $minInstances = '', $cohort) {
         $having = '';
     }
 
-    $sql = "SELECT 
+    $sql = "SELECT
     	    log.uid AS users, count(log.uid) AS event_instances
     	    FROM log
     	        INNER JOIN ($cohort) AS target_users
         	ON target_users.uid = log.uid
         	WHERE event = '$event'
         	GROUP BY log.uid
-        	$having";  //group by uid to ensure that only unique users returned    	
+        	$having";  //group by uid to ensure that only unique users returned
     $res = SonarStatManager::dbQuery($sql);
     return mysql_num_rows($res);
 }
