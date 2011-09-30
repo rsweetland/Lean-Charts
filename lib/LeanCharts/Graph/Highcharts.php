@@ -24,7 +24,7 @@ class LeanCharts_Graph_Highcharts
 
         $output = <<<HTML
         
-            <div class="sonar_graph">
+            <div class="lean_graph">
 
                 <script type="text/javascript">
 

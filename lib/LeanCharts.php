@@ -15,7 +15,7 @@ class LeanCharts
     /**
      * Initializes LeanCharts
      *
-     * @param $configFile Location of configuration file
+     * @param $configFile string Location of configuration file
      * @return void
      */
     public static function init($configFile)
@@ -35,6 +35,7 @@ class LeanCharts
      * @param $objectType string The type of object specified in earlier parameter (optional)
      * @param $numValue float An arbitrary number associated with the event (optional)
      * @param $data string Any related data in string format (optional)
+     * @param $date string Date of the event
      * @return int The ID of the recorded log
      */
     public static function log($event, $userId = null, $objectId = null, $objectType = null, $numValue = null, $data = null, $date = null)

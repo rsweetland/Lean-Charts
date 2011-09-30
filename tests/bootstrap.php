@@ -11,5 +11,3 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once(realpath(__DIR__ . '/../lib/vendors/gwc.autoloader.php'));
 require_once(__DIR__ . '/test_helpers.php');
-
-setupTestDatabase();
