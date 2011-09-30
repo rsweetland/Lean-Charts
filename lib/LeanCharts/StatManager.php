@@ -1,40 +1,64 @@
 <?php
 
-class LeanCharts_StatManager extends LeanCharts_AbstractManager
+class LeanCharts_StatManager
 {
-    public function get($statId)
+    /**
+     * @var Sparrow
+     */
+    protected $db;
+
+    public function __construct($db)
     {
-        $stat = $this->db->from('stats')->where('stat_id', $statId)->one();
+        $this->db = $db;
+    }
+
+    public function getAll()
+    {
+        $stats = $this->db->from('stats')->many();
+        return $stats;
+    }
+
+    public function getAllWeighted()
+    {
+        $stats = $this->db->from('stats')->sortDesc('weight')->many();
+        return $stats;
+    }
+
+    public function getById($statId)
+    {
+        $stat = $this->db->from('stats')->where('stat_id =', $statId)->one();
         return $stat;
     }
 
     public function getByName($statName)
     {
         $stat = $this->db->from('stats')->where('name =', $statName)->one();
+        return $stat;
+    }
 
-        if (empty($stat)) {
+    public function getStatValues($statId, $interval = 'daily', $limit = 20)
+    {
+        $table = ($interval == 'daily') ? 'stats_day' : 'stats_hour';
 
-            $statEntry = array(
-                'name' => $statName
-            );
+        $stats = $this->db->from($table)
+                          ->where('stat_id = ', $statId)
+                          ->sortDesc('timestamp')
+                          ->limit($limit)
+                          ->select(array('timestamp', 'value'))
+                          ->many();
 
-            $this->create($statEntry);
-            return $this->getByName($statName);
+        $data = array();
+        foreach($stats as $stat) {
+            $data[$stat['timestamp']] = $stat['value'];
         }
 
-        return $stat;
+        return $data;
     }
 
     public function create($stat)
     {
         $this->db->from('stats')->insert($stat)->execute();
         return $this->db->insert_id;
-    }
-
-    public function getAll()
-    {
-        $events = $this->db->from('stats')->many();
-        return $events;
     }
 
     public function populateHourlyStats($hoursAgo = 1)

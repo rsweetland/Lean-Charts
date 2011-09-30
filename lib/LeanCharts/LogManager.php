@@ -1,22 +1,54 @@
 <?php
 
-class LeanCharts_LogManager extends LeanCharts_AbstractManager
+class LeanCharts_LogManager
 {
+    /**
+     * @var Sparrow
+     */
+    protected $db;
+
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
+
+    public function getById($logId)
+    {
+        $log = $this->db->from('logs')->where('log_id =', $logId)->one();
+        return $log;
+    }
+    
     public function create($log)
     {
-        $statManager = new LeanCharts_StatManager($this->db);
-        $stat = $statManager->getByName($log['event']);
+        $statId = $this->getStatId($log);
 
         $logEntry = array(
-            'stat_id'       => $stat['stat_id'],
+            'stat_id'       => $statId,
             'user_id'       => $log['userId'],
             'object_id'     => $log['objectId'],
             'object_type'   => $log['objectType'],
             'num_value'     => $log['numValue'],
-            'data'          => $log['data']
+            'data'          => $log['data'],
+            'create_date'   => $log['date']
         );
 
         $this->db->from('logs')->insert($logEntry)->execute();
         return $this->db->insert_id;
+    }
+
+    private function getStatId($log)
+    {
+        $statManager = new LeanCharts_StatManager($this->db);
+        $stat = $statManager->getByName($log['event']);
+
+        if (!empty($stat)) {
+            $statId = $stat['stat_id'];
+        } else {
+            $statId = $statManager->create(array(
+                'name' => $log['event']
+            ));
+        }
+
+        return $statId;
     }
 }

@@ -12,13 +12,32 @@ class LeanCharts
      */
     private static $config;
 
+    /**
+     * Initializes LeanCharts
+     *
+     * @param $configFile Location of configuration file
+     * @return void
+     */
     public static function init($configFile)
     {
         self::$config = new LeanCharts_Config($configFile);
         self::$db = new Sparrow(self::getDsn());
     }
 
-    public static function logEvent($event, $userId = null, $objectId = null, $objectType = null, $numValue = null, $data = null)
+    /**
+     * Logs an Event
+     *
+     * Logs an event in the system as it happens in an application.
+     *
+     * @param $event string Name of event
+     * @param $userId int An user ID associated for the event (optional)
+     * @param $objectId int An object ID associated with the event (optional)
+     * @param $objectType string The type of object specified in earlier parameter (optional)
+     * @param $numValue float An arbitrary number associated with the event (optional)
+     * @param $data string Any related data in string format (optional)
+     * @return int The ID of the recorded log
+     */
+    public static function log($event, $userId = null, $objectId = null, $objectType = null, $numValue = null, $data = null, $date = null)
     {
         $log = array(
             'event'     => $event,
@@ -26,7 +45,8 @@ class LeanCharts
             'objectId'  => $objectId,
             'objectType'=> $objectType,
             'numValue'  => $numValue,
-            'data'      => $data
+            'data'      => $data,
+            'date'      => $date
         );
 
         $logManager = new LeanCharts_LogManager(self::$db);
@@ -35,11 +55,21 @@ class LeanCharts
         return $logId;
     }
 
+    /**
+     * Get the database object
+     *
+     * @return Sparrow
+     */
     public static function getDb()
     {
         return self::$db;
     }
 
+    /**
+     * Get the DSN string
+     *
+     * @return string
+     */
     private static function getDsn()
     {
         return "mysqli://" . self::$config->get('db.user')
