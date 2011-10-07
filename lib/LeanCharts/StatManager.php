@@ -69,17 +69,19 @@ class LeanCharts_StatManager
 		$rangeEnd = (int) $hoursAgo - 1;
 
         foreach ($stats as $stat) {
-
             $value = $this->getHourlySum($stat['stat_id'], $rangeStart, $rangeEnd, $hoursAgo);
-
-            $sql = "INSERT INTO
-                        stats_hour (stat_id, timestamp, value)
-                    VALUES
-                        ({$stat['stat_id']}, DATE_FORMAT(DATE_SUB(NOW(), INTERVAL $hoursAgo HOUR), '%Y-%m-%d %H:00:00'), $value);";
-
-            $this->db->sql($sql)->execute();
-
+            $this->insertHourlyStat($stat['stat_id'], $hoursAgo, $value);
         }
+    }
+
+    public function insertHourlyStat($statId, $hoursAgo, $value)
+    {
+        $sql = "INSERT INTO
+                    stats_hour (stat_id, timestamp, value)
+                VALUES
+                    ($statId, DATE_FORMAT(DATE_SUB(NOW(), INTERVAL $hoursAgo HOUR), '%Y-%m-%d %H:00:00'), $value);";
+
+        $this->db->sql($sql)->execute();
     }
 
     private function getHourlySum($statId, $rangeStart, $rangeEnd, $hoursAgo)
@@ -98,7 +100,6 @@ class LeanCharts_StatManager
                     HOUR(create_date)";
 
         $value = $this->db->sql($sql)->one();
-
         return (empty($value)) ? 0 : $value['hourly_count'];
     }
 
@@ -110,17 +111,19 @@ class LeanCharts_StatManager
 		$rangeEnd = (int) $daysAgo - 1;
 
         foreach ($stats as $stat) {
-
             $value = $this->getDailySum($stat['stat_id'], $rangeStart, $rangeEnd, $daysAgo);
-
-            $sql = "INSERT INTO
-                        stats_day (stat_id, timestamp, value)
-                    VALUES
-                        ({$stat['stat_id']}, DATE(DATE_SUB(NOW(), INTERVAL $daysAgo DAY)), $value);";
-
-            $this->db->sql($sql)->execute();
-
+            $this->insertDailyStat($stat['stat_id'], $daysAgo, $value);
         }
+    }
+
+    public function insertDailyStat($statId, $daysAgo, $value)
+    {
+        $sql = "INSERT INTO
+                    stats_day (stat_id, timestamp, value)
+                VALUES
+                    ($statId, DATE(DATE_SUB(NOW(), INTERVAL $daysAgo DAY)), $value);";
+
+        $this->db->sql($sql)->execute();
     }
 
     private function getDailySum($statId, $rangeStart, $rangeEnd, $daysAgo)
@@ -136,10 +139,9 @@ class LeanCharts_StatManager
 			    AND
 			        DAY(create_date) = DAY(DATE_SUB(NOW(), INTERVAL $daysAgo DAY))
                 GROUP BY
-                    HOUR(create_date)";
+                    DAY(create_date)";
 
         $value = $this->db->sql($sql)->one();
-
         return (empty($value)) ? 0 : $value['daily_count'];
     }
 }

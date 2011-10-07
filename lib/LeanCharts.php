@@ -2,6 +2,9 @@
 
 class LeanCharts
 {
+    const INTERVAL_DAY = 'day';
+    const INTERVAL_HOUR = 'hour';
+    
     /**
      * @var Sparrow
      */
