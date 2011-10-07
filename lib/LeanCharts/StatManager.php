@@ -55,6 +55,18 @@ class LeanCharts_StatManager
         return $data;
     }
 
+    public function register($statName)
+    {
+        $stat = $this->getByName($statName);
+
+        if (empty($stat)) {
+            $this->create(array('name' => $statName));
+            $stat = $this->getByName($statName);
+        }
+
+        return $stat;
+    }
+
     public function create($stat)
     {
         $this->db->from('stats')->insert($stat)->execute();

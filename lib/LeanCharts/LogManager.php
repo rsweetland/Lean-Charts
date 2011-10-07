@@ -39,16 +39,7 @@ class LeanCharts_LogManager
     private function getStatId($log)
     {
         $statManager = new LeanCharts_StatManager($this->db);
-        $stat = $statManager->getByName($log['event']);
-
-        if (!empty($stat)) {
-            $statId = $stat['stat_id'];
-        } else {
-            $statId = $statManager->create(array(
-                'name' => $log['event']
-            ));
-        }
-
-        return $statId;
+        $stat = $statManager->register($log['event']);
+        return $stat['stat_id'];
     }
 }

@@ -23,13 +23,18 @@ class AverageEventPerUser extends LeanCharts_CustomStat
         $users = $this->db->sql($sql)->one();
         $totalUsers = $users['total_users'];
 
-        $statId = $this->getStatId('fut scheduled');
-        $sql = "SELECT COUNT(*) AS total_events FROM logs WHERE stat_id = $statId";
-        $events = $this->db->sql($sql)->one();
-        $totalEvents = $events['total_events'];
+        $statId = $this->helper->getStatId('fut scheduled');
 
-        if ($totalUsers > 0) {
-            $average = $totalEvents / $totalUsers;
+        if (!empty($statId)) {
+
+            $sql = "SELECT COUNT(*) AS total_events FROM logs WHERE stat_id = $statId";
+            $events = $this->db->sql($sql)->one();
+            $totalEvents = $events['total_events'];
+
+            if ($totalUsers > 0) {
+                $average = $totalEvents / $totalUsers;
+            }
+
         }
 
         return $average;
