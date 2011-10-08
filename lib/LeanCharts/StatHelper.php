@@ -50,6 +50,35 @@ class LeanCharts_StatHelper
         return $this->db->num_rows;
     }
 
+    public function countStats($statName, $startDate = null, $endDate = null)
+    {
+        $statId = $this->getStatId($statName);
+
+        if (empty($statId)) {
+            return 0;
+        }
+
+        $cohort = '';
+        if (!empty($this->userCohort)) {
+            $cohort = "INNER JOIN ({$this->userCohort}) AS target_users ON target_users.user_id = logs.user_id ";
+        }
+
+        $dateRange = '';
+        if (!empty($startDate) && !empty($endDate)) {
+            $dateRange = "AND logs.create_date BETWEEN '$startDate' AND '$endDate'";
+        }
+
+        $sql = "SELECT COUNT(*) AS total_events
+                FROM logs
+                {$cohort}
+                WHERE stat_id = $statId
+                {$dateRange}
+                GROUP BY logs.stat_id";
+
+        $result = $this->db->sql($sql)->one();
+        return $result['total_events'];
+    }
+
     public function getStatId($statName)
     {
         $statManager = new LeanCharts_StatManager($this->db);
