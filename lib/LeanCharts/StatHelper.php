@@ -22,7 +22,7 @@ class LeanCharts_StatHelper
         $this->userCohort = $cohort;
     }
 
-    public function countUsersByStat($statName, $minInstances = 0)
+    public function countUsersByStat($statName, $minInstances = 0) /* Comment: This should be 1 I think, not 0 */
     {
         $statId = $this->getStatId($statName);
 

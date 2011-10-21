@@ -6,7 +6,12 @@ class AverageEventPerUser extends LeanCharts_CustomStat
     {
         $this->setName('Average number of event initiated by an user');
         $this->setInterval(LeanCharts::INTERVAL_DAY);
+        /* Comment: This constant is cool, and probably way more technically
+        correct, but I would prefer just writing 'day' or 'month' just to 
+        make the "user interface" simpler.  */
         $this->setTimeAgo(1);
+        /* Comment: Sorry, I forget what this param is...is it wishful thinking for
+        historical values? */
     }
 
     public function getUserCohort()
