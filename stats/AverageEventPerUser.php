@@ -5,7 +5,7 @@ class AverageEventPerUser extends LeanCharts_CustomStat
     public function define()
     {
         $this->setName('Average number of event initiated by an user');
-        $this->setInterval(LeanCharts::INTERVAL_DAY);
+        $this->setIntervalDaily();
         $this->setTimeAgo(1);
     }
 

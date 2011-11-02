@@ -5,7 +5,7 @@ class AverageEventPerUser extends LeanCharts_CustomStat
     public function define()
     {
         $this->setName('Average number of event initiated by an user');
-        $this->setInterval(LeanCharts::INTERVAL_DAY);
+        $this->setIntervalDaily();
         $this->setTimeAgo(1);
     }
 
@@ -27,9 +27,7 @@ class AverageEventPerUser extends LeanCharts_CustomStat
 
         if (!empty($statId)) {
 
-            $sql = "SELECT COUNT(*) AS total_events FROM logs WHERE stat_id = $statId";
-            $events = $this->db->sql($sql)->one();
-            $totalEvents = $events['total_events'];
+            $totalEvents = $this->helper->countStats('fut scheduled');
 
             if ($totalUsers > 0) {
                 $average = $totalEvents / $totalUsers;

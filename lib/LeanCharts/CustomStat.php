@@ -48,14 +48,19 @@ abstract class LeanCharts_CustomStat
         $this->name = $name;
     }
 
-    public function setInterval($interval)
-    {
-        $this->interval = $interval;
-    }
-
     public function setTimeAgo($timeAgo)
     {
         $this->timeAgo = $timeAgo;
+    }
+
+    public function setIntervalDaily()
+    {
+        $this->interval = LeanCharts::INTERVAL_DAY;
+    }
+
+    public function setIntervalHourly()
+    {
+        $this->interval = LeanCharts::INTERVAL_HOUR;
     }
 
     abstract public function define();

@@ -5,7 +5,7 @@ class PercentOfNewUsersValidatingAccount extends LeanCharts_CustomStat
     public function define()
     {
         $this->setName('2 week funnel: step 1 - percent of new users that validate');
-        $this->setInterval(LeanCharts::INTERVAL_DAY);
+        $this->setIntervalDaily();
         $this->setTimeAgo(1);
     }
 

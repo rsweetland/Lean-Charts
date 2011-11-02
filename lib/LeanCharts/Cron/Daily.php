@@ -2,10 +2,10 @@
 
 class LeanCharts_Cron_Daily extends LeanCharts_Cron_Abstract
 {
-    public function execute()
+    public function execute($daysAgo = 1)
     {
         $statManager = new LeanCharts_StatManager($this->db);
-        $statManager->populateDailyStats();
+        $statManager->populateDailyStats($daysAgo);
         $this->runCustomStats(LeanCharts::INTERVAL_DAY);
     }
 }
