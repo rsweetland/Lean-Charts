@@ -12,7 +12,9 @@
    Shared Styles
 ----------------------------------------- */
 
-
+.container {
+    margin-top: 20px;
+}
 
 
 
@@ -22,4 +24,10 @@
 
 .graph-row {
     margin-bottom: 30px;
+}
+
+/* Event Page */
+
+#event-list {
+    border-right: 1px dotted #ccc;
 }

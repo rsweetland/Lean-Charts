@@ -10,15 +10,13 @@ $stats = $statManager->getAllWeighted();
 <div class="container">
 
     <div class="row">
-        <hr />
-    </div>
-
-    <div class="row">
 
         <div class="eight columns">
             <h3>LeanCharts Dashboard</h3>
             <p>The dashboard shows all of the events your a logging, plotted over time</p>
         </div>
+
+        <hr />
         
     </div>
 

@@ -64,13 +64,6 @@ class LeanCharts_Graph_Highcharts
                                 data: [$values],
                                 pointStart: Date.UTC({$year}, {$month}, {$day}),
                                 pointInterval: 24 * 3600 * 1000 // one day
-                            }, {
-                                type: 'column',
-                                name: 'meaningful event',
-                                data: []
-                            } , {
-                                name: 'target',
-                                data: [$targetValues]
                             }]
                         });
 
