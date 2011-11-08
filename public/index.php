@@ -3,6 +3,8 @@
 include 'includes/header.php';
 
 $statManager = new LeanCharts_StatManager(LeanCharts::getDb());
+$changeEventManger = new LeanCharts_ChangeEventManager(LeanCharts::getDb());
+
 $stats = $statManager->getAllWeighted();
 
 ?>
@@ -13,7 +15,7 @@ $stats = $statManager->getAllWeighted();
 
         <div class="eight columns">
             <h3>LeanCharts Dashboard</h3>
-            <p>The dashboard shows all of the events your a logging, plotted over time</p>
+            <p>The dashboard shows all of the events your a logging, plotted over time. Manage your change events <a href="change_events.php">here</a>.</p>
         </div>
 
         <hr />
@@ -27,7 +29,8 @@ $stats = $statManager->getAllWeighted();
     foreach ($stats as $stat):
 
         $data = $statManager->getStatValues($stat['stat_id']);
-        $graph = new LeanCharts_Graph_Highcharts($stat, $data);
+        $changeEvents = $changeEventManger->getEventsWithinDataRange($data);
+        $graph = new LeanCharts_Graph_Highcharts($stat, $data, $changeEvents);
 
     ?>
 

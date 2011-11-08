@@ -121,6 +121,58 @@ class LeanCharts_StatHelper
         return $result['total_events'];
     }
 
+    public function getMaxValue($statName, $startDate = null, $endDate = null)
+    {
+        $statId = $this->getStatId($statName);
+
+        if (empty($statId)) {
+            return false;
+        }
+
+        $dateRange = '';
+        if (!empty($startDate) && !empty($endDate)) {
+            $dateRange = "AND logs.create_date BETWEEN '$startDate' AND '$endDate'";
+        }
+
+        $sql = "SELECT
+                    MAX(count) AS max_value
+                FROM
+                    logs
+                WHERE stat_id = $statId
+                    {$dateRange}
+                GROUP BY
+                    logs.stat_id";
+
+        $result = $this->db->sql($sql)->one();
+        return $result['max_value'];
+    }
+
+    public function getMinValue($statName, $startDate = null, $endDate = null)
+    {
+        $statId = $this->getStatId($statName);
+
+        if (empty($statId)) {
+            return false;
+        }
+
+        $dateRange = '';
+        if (!empty($startDate) && !empty($endDate)) {
+            $dateRange = "AND logs.create_date BETWEEN '$startDate' AND '$endDate'";
+        }
+
+        $sql = "SELECT
+                    MIN(count) AS min_value
+                FROM
+                    logs
+                WHERE stat_id = $statId
+                    {$dateRange}
+                GROUP BY
+                    logs.stat_id";
+
+        $result = $this->db->sql($sql)->one();
+        return $result['min_value'];
+    }
+
     public function getStatId($statName)
     {
         $statManager = new LeanCharts_StatManager($this->db);

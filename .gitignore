@@ -2,3 +2,4 @@
 config/*.ini
 tests/config/*.ini
 tests/log/*
+.DS_Store

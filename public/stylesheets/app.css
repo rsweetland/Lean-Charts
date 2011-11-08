@@ -31,3 +31,7 @@
 #event-list {
     border-right: 1px dotted #ccc;
 }
+
+h4 {
+    margin-bottom: 20px;
+}

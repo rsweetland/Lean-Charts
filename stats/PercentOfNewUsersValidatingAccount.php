@@ -31,7 +31,7 @@ class PercentOfNewUsersValidatingAccount extends LeanCharts_CustomStat
         $countValidUsers = $this->helper->countUsersByStat('validation completed', 1);
 
         if ($countNewUsers > 0) {
-            $percentage = ($countValidUsers  / $countNewUsers) * 100;
+            $percentage = ($countValidUsers / $countNewUsers) * 100;
         }
 
         return $percentage;

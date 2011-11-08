@@ -12,15 +12,26 @@ class LeanCharts_Graph_Highcharts
      */
     private $data;
 
-    public function __construct($stat, $data)
+    /**
+     * @var array List of change events within given data
+     */
+    private $changeEvents;
+
+    /**
+     * @var integer Maximum value of the plotted data
+     */
+    private $maxValue;
+
+    public function __construct($stat, $data, $changeEvents)
     {
         $this->stat = $stat;
         $this->data = $data;
+        $this->changeEvents = $changeEvents;
     }
 
     public function render($width = 480, $height = 300, $target = null)
     {
-        list($values, $targetValues, $year, $month, $day, $title, $id) = $this->calculateGraphValues($target);
+        list($values, $targetValues, $year, $month, $day, $title, $id, $changeEventConfig) = $this->calculateGraphValues($target);
 
         $output = <<<HTML
         
@@ -59,7 +70,7 @@ class LeanCharts_Graph_Highcharts
                                     color: '#808080'
                                 }]
                             },
-                            series: [{
+                            series: [{$changeEventConfig} {
                                 name: '$title',
                                 data: [$values],
                                 pointStart: Date.UTC({$year}, {$month}, {$day}),
@@ -98,6 +109,10 @@ HTML;
             $dates[] = date('Y-m-d', strtotime($date));
             $values[] = $value;
 
+            if ($value > $this->maxValue) {
+                $this->maxValue = $value;
+            }
+
             $targetValues[] = $target;
         }
 
@@ -113,7 +128,37 @@ HTML;
 
         $title = $this->stat['name'];
         $id = microtime();
+
+        $config = '';
+
+        if (!empty($this->changeEvents)) {
+
+            foreach ($this->changeEvents as $event) {
+
+                $changeEventIndex = (strtotime($event['date']) - $time) / 86400;
+                $changeEventValues = array_fill(0, count($data), 0);
+                $changeEventValues[$changeEventIndex] = $this->maxValue - 1;
+
+                $changeEventTitle = $event['title'];
+                $changeEventValue = implode(",", $changeEventValues);
+
+                $html = <<<HTML
+                {
+                    type: 'column',
+                    name: '{$changeEventTitle}',
+                    pointStart: Date.UTC({$year}, {$month}, {$day}),
+                    pointInterval: 24 * 3600 * 1000, // one day
+                    data: [{$changeEventValue}]
+                },
+
+HTML;
+
+                $config .= $html;
+            }
+
+        }
         
-        return array($values, $targetValues, $year, $month, $day, $title, $id);
+        return array($values, $targetValues, $year, $month, $day, $title, $id, $config);
     }
+
 }

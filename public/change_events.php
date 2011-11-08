@@ -3,6 +3,11 @@
 include 'includes/header.php';
 
 $changeEventManger = new LeanCharts_ChangeEventManager(LeanCharts::getDb());
+
+if (!empty($_POST)) {
+    $changeEventManger->create($_POST);
+}
+
 $allChangeEvents = $changeEventManger->getAll();
 
 ?>
@@ -13,7 +18,7 @@ $allChangeEvents = $changeEventManger->getAll();
 
         <div class="eight columns">
             <h3>LeanCharts</h3>
-            <p>The individual change events occuring over time.</p>
+            <p>The individual change events occurring over time. <a href="index.php">Go back</a> to Dashboard.</p>
         </div>
 
         <hr />
@@ -42,16 +47,16 @@ $allChangeEvents = $changeEventManger->getAll();
 
             <h4>Add New Event</h4>
 
-            <form action="" method="post">
+            <form id="add-change-event" action="" method="post">
 
                 <label for="title">Title:</label>
-                <input id="title" name="title" type="text" class="input-text" />
+                <input id="title" name="title" type="text" class="input-text required" />
                 
                 <label for="date">Date:</label>
-                <input id="date" name="date" type="text" class="input-text" />
+                <input id="date" name="date" type="text" class="input-text required" />
                 
                 <label for="description">Description</label>
-                <textarea rows="5" cols="25" name="description" id="description"></textarea>
+                <textarea rows="5" cols="25" name="description" id="description" class="required"></textarea>
 
                 <input type="submit" class="small button" />
 
@@ -66,5 +71,17 @@ $allChangeEvents = $changeEventManger->getAll();
     </div>
 
 </div>
+
+<script type="text/javascript" src="javascripts/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $("#add-change-event").validate({
+           errorElement: "small"
+        });
+    });
+
+</script>
 
 <?php include 'includes/footer.php'; ?>
