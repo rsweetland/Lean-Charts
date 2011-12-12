@@ -22,7 +22,7 @@ class LeanCharts_Graph_Highcharts
      */
     private $maxValue;
 
-    public function __construct($stat, $data, $changeEvents)
+    public function __construct($stat, $data, $changeEvents = array())
     {
         $this->stat = $stat;
         $this->data = $data;

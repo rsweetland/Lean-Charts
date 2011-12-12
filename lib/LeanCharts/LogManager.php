@@ -15,8 +15,14 @@ class LeanCharts_LogManager
     public function getById($logId)
     {
         $log = $this->db->from('logs')->where('log_id =', $logId)->one();
+        $log['data'] = unserialize($log['data']);
         return $log;
     }
+    
+    /** 
+    * Writes log to database 
+    * @param $log array
+    */
     
     public function create($log)
     {
@@ -24,14 +30,24 @@ class LeanCharts_LogManager
 
         $logEntry = array(
             'stat_id'       => $statId,
-            'user_id'       => $log['userId'],
-            'object_id'     => $log['objectId'],
-            'object_type'   => $log['objectType'],
-            'num_value'     => $log['numValue'],
-            'data'          => $log['data'],
-            'create_date'   => $log['date']
+            'user_id'       => $log['user_id'],
+            'object_id'     => $log['object_id'],
+            'object_type'   => $log['object_type'],
+            'num_value'     => $log['num_value'],
+            'create_date'   => $log['create_date']
         );
-
+        
+        // build 'data' from custom-entered keys
+        $specialKeys = array_keys($logEntry);
+        $customData = array();
+        foreach($log as $key => $value) {
+          if (!in_array($key, $specialKeys)) {
+            $customData[$key] = $value;
+          }
+        }
+        
+        $logEntry['data'] = serialize($customData);
+        
         $this->db->from('logs')->insert($logEntry)->execute();
         return $this->db->insert_id;
     }

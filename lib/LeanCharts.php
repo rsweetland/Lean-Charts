@@ -41,20 +41,11 @@ class LeanCharts
      * @param $date string Date of the event
      * @return int The ID of the recorded log
      */
-    public static function log($event, $userId = null, $objectId = null, $objectType = null, $numValue = null, $data = null, $date = null)
+    public static function log($event, $data = array())
     {
-        $log = array(
-            'event'     => $event,
-            'userId'    => $userId,
-            'objectId'  => $objectId,
-            'objectType'=> $objectType,
-            'numValue'  => $numValue,
-            'data'      => $data,
-            'date'      => $date
-        );
-
+        $data[] = array('event' => $event); 
         $logManager = new LeanCharts_LogManager(self::$db);
-        $logId = $logManager->create($log);
+        $logId = $logManager->create($data);
 
         return $logId;
     }
