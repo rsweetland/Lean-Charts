@@ -46,3 +46,15 @@
 
 </head>
 <body>
+
+<div class="container">
+  <div class="row">
+    <div class="seven columns right">
+      <a href="index.php"> Dashboard </a> | 
+      <a href="change_events.php">Change Events</a> | 
+      <a href="custom-view-example.php">Custom Stat View Example</a>
+    </div>
+  </div>
+</div>
+    
+    

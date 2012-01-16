@@ -14,8 +14,9 @@ $stats = $statManager->getAllWeighted();
     <div class="row">
 
         <div class="eight columns">
-            <h3>LeanCharts Dashboard</h3>
-            <p>The dashboard shows all of the events your a logging, plotted over time. Manage your change events <a href="change_events.php">here</a>.</p>
+            <h3>Dashboard</h3>
+            <p>All log events (shown as frequency of that event over time), plus
+              custom stats.</p>
         </div>
 
         <hr />
