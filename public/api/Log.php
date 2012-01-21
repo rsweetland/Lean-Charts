@@ -36,7 +36,7 @@ class Log extends Resource
             $response->code = Response::FORBIDDEN;
             return $response;
         }
-        
+
         if (empty($_POST['event'])) {
             $response->code = Response::NOTACCEPTABLE;
             return $response;
