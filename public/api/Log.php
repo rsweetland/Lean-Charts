@@ -8,10 +8,15 @@ class Log extends Resource
 {
     public function get($request, $id)
     {
+        $response = new Response($request);
+
+        if (!$this->isAuthorized()) {
+            $response->code = Response::FORBIDDEN;
+            return $response;
+        }
+
         $logManager = new LeanCharts_LogManager(LeanCharts::getDb());
         $entry = $logManager->getById($id);
-
-        $response = new Response($request);
 
         if ($entry) {
             $response->body = json_encode($entry);
@@ -27,6 +32,11 @@ class Log extends Resource
     {
         $response = new Response($request);
 
+        if (!$this->isAuthorized()) {
+            $response->code = Response::FORBIDDEN;
+            return $response;
+        }
+        
         if (empty($_POST['event'])) {
             $response->code = Response::NOTACCEPTABLE;
             return $response;
@@ -49,5 +59,19 @@ class Log extends Resource
         }
 
         return $response;
+    }
+
+    private function isAuthorized()
+    {
+        $config = LeanCharts::getConfig();
+
+        if ($config->get('client.allowed_ip') != '0.0.0.0') {
+            $clientIp = $_SERVER['REMOTE_ADDR'];
+            if ($clientIp != $config->get('client.allowed_ip')) {
+                return false;
+            }
+        }
+
+        return !empty($_GET['token']) AND ($_GET['token'] == $config->get('client.token'));
     }
 }

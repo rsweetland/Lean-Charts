@@ -9,3 +9,7 @@ db.user = root
 db.pass = root
 db.name = lean_charts
 db.port = 3307
+
+[api]
+client.token = c11587f9806c93393e603429fb802ddd
+client.allowed_ip = 0.0.0.0

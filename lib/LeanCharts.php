@@ -70,6 +70,16 @@ class LeanCharts
     }
 
     /**
+     * Get the loaded configuration
+     *
+     * @return LeanCharts_Config
+     */
+    public static function getConfig()
+    {
+        return self::$config;
+    }
+
+    /**
      * Get the DSN string
      *
      * @return string
